@@ -67,9 +67,9 @@ generateMeme.addEventListener('click', () => {
     const bottomTextValue = bottomText.value;
 
     if (styleSelector.value === 'demotivational') {
-        // Set canvas to black background with 16:9 aspect ratio
-        const canvasWidth = 800;
-        const canvasHeight = 450;
+        // Set canvas to black background with 16:9 aspect ratio, but smaller
+        const canvasWidth = 600; // Reduced from 800
+        const canvasHeight = 338; // Reduced from 450 (16:9 ratio maintained)
         memeCanvas.width = canvasWidth;
         memeCanvas.height = canvasHeight;
         ctx.fillStyle = 'black';
@@ -84,47 +84,96 @@ generateMeme.addEventListener('click', () => {
         const imgY = (canvasHeight - imgHeight) / 3;
         ctx.drawImage(uploadedImage, imgX, imgY, imgWidth, imgHeight);
 
-        // Set up text style
+        // Draw a white box around the image
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(imgX - 2, imgY - 2, imgWidth + 4, imgHeight + 4);
+
+        // Center top text (larger)
         ctx.fillStyle = 'white';
+        ctx.font = '28px Times New Roman'; // Reduced from 36px
         ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        wrapText(ctx, topTextValue, canvasWidth / 2, imgY + imgHeight + 40, canvasWidth - 40, 30);
 
-        // Draw top text (larger)
-        ctx.font = '36px Times New Roman';
-        ctx.textBaseline = 'top';
-        ctx.fillText(topTextValue, canvasWidth / 2, imgY + imgHeight + 20);
-
-        // Draw bottom text (smaller)
-        ctx.font = '18px Times New Roman';
-        ctx.textBaseline = 'top';
-        ctx.fillText(bottomTextValue, canvasWidth / 2, imgY + imgHeight + 70);
+        // Center bottom text (smaller)
+        ctx.font = '14px Times New Roman'; // Reduced from 18px
+        wrapText(ctx, bottomTextValue, canvasWidth / 2, imgY + imgHeight + 80, canvasWidth - 40, 20);
     } else {
-        // Existing meme generation code for other styles
-        memeCanvas.width = uploadedImage.width;
-        memeCanvas.height = uploadedImage.height;
-        ctx.drawImage(uploadedImage, 0, 0, memeCanvas.width, memeCanvas.height);
+        // Maintain aspect ratio but limit size
+        const maxWidth = 600;
+        const maxHeight = 600;
+        let newWidth = uploadedImage.width;
+        let newHeight = uploadedImage.height;
 
-        // Set up text style
-        if (styleSelector.value === 'impact') {
-            ctx.font = '40px Impact';
-        } else if (styleSelector.value === 'arial') {
-            ctx.font = '40px Arial';
+        if (newWidth > maxWidth) {
+            newHeight = (maxWidth / newWidth) * newHeight;
+            newWidth = maxWidth;
         }
+        if (newHeight > maxHeight) {
+            newWidth = (maxHeight / newHeight) * newWidth;
+            newHeight = maxHeight;
+        }
+
+        memeCanvas.width = newWidth;
+        memeCanvas.height = newHeight;
+        ctx.drawImage(uploadedImage, 0, 0, newWidth, newHeight);
+
+        // Center top text with stroke
         ctx.fillStyle = 'white';
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
+        ctx.font = 'bold 36px Impact';
         ctx.textAlign = 'center';
-
-        // Draw top text with stroke
         ctx.textBaseline = 'top';
-        ctx.fillText(topTextValue, memeCanvas.width / 2, 20);
-        ctx.strokeText(topTextValue, memeCanvas.width / 2, 20);
+        wrapText(ctx, topTextValue, newWidth / 2, 10, newWidth - 20, 40);
 
-        // Draw bottom text with stroke
+        // Center bottom text with stroke
         ctx.textBaseline = 'bottom';
-        ctx.fillText(bottomTextValue, memeCanvas.width / 2, memeCanvas.height - 20);
-        ctx.strokeText(bottomTextValue, memeCanvas.width / 2, memeCanvas.height - 20);
+        wrapText(ctx, bottomTextValue, newWidth / 2, newHeight - 10, newWidth - 20, 40);
     }
 });
+
+// Updated wrapText function
+function wrapText(context, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let lines = [];
+    let currentLine = '';
+
+    // Create lines that fit within maxWidth
+    for (let word of words) {
+        let testLine = currentLine + (currentLine ? ' ' : '') + word;
+        let metrics = context.measureText(testLine);
+        if (metrics.width > maxWidth && currentLine !== '') {
+            lines.push(currentLine);
+            currentLine = word;
+        } else {
+            currentLine = testLine;
+        }
+    }
+    lines.push(currentLine);
+
+    // Calculate total height of text
+    let totalHeight = lines.length * lineHeight;
+
+    // Adjust starting y position to center text vertically
+    let startY;
+    if (context.textBaseline === 'top') {
+        startY = y;
+    } else if (context.textBaseline === 'bottom') {
+        startY = y - totalHeight;
+    } else { // 'middle'
+        startY = y - totalHeight / 2;
+    }
+
+    // Draw each line
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        let lineY = startY + (i * lineHeight);
+        context.strokeText(line, x, lineY);
+        context.fillText(line, x, lineY);
+    }
+}
 
 downloadMeme.addEventListener('click', () => {
     const url = memeCanvas.toDataURL('image/png');

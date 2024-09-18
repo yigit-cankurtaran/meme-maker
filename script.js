@@ -50,8 +50,18 @@ imageUpload.addEventListener('change', (e) => {
     reader.readAsDataURL(file);
 });
 
+// Add this event listener outside of other functions
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        generateMeme.click();
+    }
+});
+
 generateMeme.addEventListener('click', () => {
-    if (!uploadedImage) return;
+    if (!uploadedImage) {
+        alert('Upload an image first.');
+        return;
+    }
 
     const topTextValue = topText.value;
     const bottomTextValue = bottomText.value;

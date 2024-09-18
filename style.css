@@ -2,75 +2,88 @@ body {
     background-color: #1a1a1a; /* Dark background color */
     color: #f0f0f0; /* Light text color for contrast */
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    padding: 20px;
 }
 
 .meme-generator {
     background-color: #2a2a2a; /* Slightly lighter background for container */
     border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 800px; /* Increased max-width */
     width: 100%;
 }
 
-.input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.style-selector, .input-container {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
 }
 
 h1 {
     color: #ff4500; /* Orange color for headings */
-}
-
-input {
-    display: block; 
-    margin-bottom: 10px;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ff4500;
-    border-radius: 4px;
+    margin-bottom: 30px;
     text-align: center;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    width: 100%; /* Ensure the h1 takes full width */
 }
 
-input[type="text"] {
-    border: 1px solid #ff4500; /* Orange border */
-    padding: 10px;
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ff6a33;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
     margin-bottom: 15px;
-    width: calc(100% - 22px); /* Full width minus padding and border */
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+    border: 2px solid #ff4500;
+    border-radius: 6px;
+    background-color: #333;
+    color: #f0f0f0;
+    font-size: 1em;
+    transition: all 0.3s ease;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, select:focus {
     outline: none;
     border-color: #ff6a33; /* Lighter orange on focus */
-    box-shadow: 0 0 5px rgba(255, 69, 0, 0.5); /* Subtle glow effect */
+    box-shadow: 0 0 8px rgba(255, 69, 0, 0.6); /* Subtle glow effect */
 }
 
 input[type="text"]::placeholder {
     color: #999; /* Light grey placeholder text */
 }
 
-
+input[type="file"] {
+    border: none;
+    padding: 8px 0;
+    background-color: transparent;
+}
 
 button {
-    width: 50%;
-    padding: 10px;
+    width: 100%;
+    padding: 12px;
     background-color: #ff4500;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    margin-top: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -78,16 +91,32 @@ button:hover {
 }
 
 #meme-canvas {
-    margin: 20px;
-    border: 1px solid #ff4500;
-    border-radius: 4px;
-    width: 80%;
+    max-width: 100%;
+    height: auto;
+    margin: 25px 0;
+    border: 2px solid #ff4500;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
 }
 
-.style-selector {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+#download-meme {
+    max-width: 400px;
+}
+
+@media (min-width: 768px) {
+    .meme-generator {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .input-container {
+        width: 48%;
+    }
+
+    #meme-canvas {
+        width: 100%;
+        max-height: 60vh;
+        object-fit: contain;
+    }
 }

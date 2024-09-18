@@ -67,38 +67,46 @@ generateMeme.addEventListener('click', () => {
     const bottomTextValue = bottomText.value;
 
     if (styleSelector.value === 'demotivational') {
-        // Set canvas to black background with 16:9 aspect ratio, but smaller
-        const canvasWidth = 600; // Reduced from 800
-        const canvasHeight = 338; // Reduced from 450 (16:9 ratio maintained)
-        memeCanvas.width = canvasWidth;
-        memeCanvas.height = canvasHeight;
+        // Set canvas to a square with black background
+        const canvasSize = 600; // Square canvas size
+        memeCanvas.width = canvasSize;
+        memeCanvas.height = canvasSize;
         ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+        ctx.fillRect(0, 0, canvasSize, canvasSize);
 
-        // Calculate image dimensions (60% of canvas height)
-        const imgHeight = Math.round(canvasHeight * 0.6);
-        const imgWidth = Math.round((imgHeight / originalImageDimensions.height) * originalImageDimensions.width);
+        // Calculate image dimensions to fit within 80% of the canvas while maintaining aspect ratio
+        const maxImgSize = Math.round(canvasSize * 0.8);
+        let imgWidth = originalImageDimensions.width;
+        let imgHeight = originalImageDimensions.height;
 
-        // Draw image centered
-        const imgX = (canvasWidth - imgWidth) / 2;
-        const imgY = (canvasHeight - imgHeight) / 3;
+        if (imgWidth > imgHeight) {
+            imgHeight = (maxImgSize / imgWidth) * imgHeight;
+            imgWidth = maxImgSize;
+        } else {
+            imgWidth = (maxImgSize / imgHeight) * imgWidth;
+            imgHeight = maxImgSize;
+        }
+
+        // Draw image centered in the upper part of the square
+        const imgX = (canvasSize - imgWidth) / 2;
+        const imgY = (canvasSize - imgHeight) / 4; // Position image in the upper third
         ctx.drawImage(uploadedImage, imgX, imgY, imgWidth, imgHeight);
 
-        // Draw a white box around the image
+        // Draw a white border around the image
         ctx.strokeStyle = 'white';
         ctx.lineWidth = 2;
         ctx.strokeRect(imgX - 2, imgY - 2, imgWidth + 4, imgHeight + 4);
 
         // Center top text (larger)
         ctx.fillStyle = 'white';
-        ctx.font = '28px Times New Roman'; // Reduced from 36px
+        ctx.font = 'bold 28px Times New Roman';
         ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        wrapText(ctx, topTextValue, canvasWidth / 2, imgY + imgHeight + 40, canvasWidth - 40, 30);
+        ctx.textBaseline = 'top';
+        wrapText(ctx, topTextValue, canvasSize / 2, imgY + imgHeight + 20, canvasSize - 40, 32);
 
         // Center bottom text (smaller)
-        ctx.font = '14px Times New Roman'; // Reduced from 18px
-        wrapText(ctx, bottomTextValue, canvasWidth / 2, imgY + imgHeight + 80, canvasWidth - 40, 20);
+        ctx.font = '16px Times New Roman';
+        wrapText(ctx, bottomTextValue, canvasSize / 2, canvasSize - 40, canvasSize - 40, 20);
     } else {
         // Maintain aspect ratio but limit size
         const maxWidth = 600;

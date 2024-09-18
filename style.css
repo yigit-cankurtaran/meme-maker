@@ -1,0 +1,52 @@
+body {
+    background-color: #1a1a1a; /* Dark background color */
+    color: #f0f0f0; /* Light text color for contrast */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.meme-generator {
+    background-color: #2a2a2a; /* Slightly lighter background for container */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    color: #ff4500; /* Orange color for headings */
+}
+
+input {
+    display: block; 
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ff4500;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e63900;
+}
+
+#meme-canvas {
+    margin-top: 20px;
+    border: 1px solid #ff4500;
+    border-radius: 4px;
+    width: 80%;
+}

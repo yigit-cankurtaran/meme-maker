@@ -8,6 +8,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add transition for smooth color change */
 }
 
 .meme-generator {
@@ -20,6 +21,7 @@ body {
     align-items: center;
     max-width: 800px; /* Increased max-width */
     width: 100%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Add transition for smooth color change */
 }
 
 .style-selector, .input-container {
@@ -35,6 +37,7 @@ h1 {
     font-size: 2.5em;
     text-shadow: none; /* Remove text shadow */
     width: 100%; /* Ensure the h1 takes full width */
+    transition: color 0.3s ease; /* Add transition for smooth color change */
 }
 
 label {
@@ -42,6 +45,7 @@ label {
     margin-bottom: 8px;
     font-weight: bold;
     color: #555; /* Slightly darker grey for labels */
+    transition: color 0.3s ease; /* Add transition for smooth color change */
 }
 
 input, select {
@@ -64,6 +68,7 @@ input[type="text"]:focus, select:focus {
 
 input[type="text"]::placeholder {
     color: #999; /* Light grey placeholder text */
+    transition: color 0.3s ease; /* Add transition for smooth color change */
 }
 
 input[type="file"] {
@@ -83,7 +88,7 @@ button {
     margin-top: 15px;
     font-size: 1.1em;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add transition for smooth color change */
 }
 
 button:hover {
@@ -101,6 +106,49 @@ button:hover {
 
 #download-meme {
     max-width: 400px;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #222; /* Dark background */
+    color: #fff; /* Light text */
+}
+
+.dark-mode .meme-generator {
+    background-color: #333; /* Darker background for container */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); /* Subtle white shadow */
+}
+
+.dark-mode h1 {
+    color: #eee; /* Light grey for headings */
+}
+
+.dark-mode label {
+    color: #ddd; /* Light grey for labels */
+}
+
+.dark-mode input, .dark-mode select {
+    background-color: #444; /* Dark grey background */
+    color: #eee; /* Light grey text */
+    border: 1px solid #666; /* Darker border */
+}
+
+.dark-mode input[type="text"]::placeholder {
+    color: #888; /* Light grey placeholder text */
+}
+
+.dark-mode button {
+    background-color: #007bff; /* Blue button */
+    color: white;
+}
+
+.dark-mode button:hover {
+    background-color: #0069d9; /* Darker blue on hover */
+}
+
+.dark-mode #meme-canvas {
+    border: 1px solid #666; /* Darker border */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Subtle white shadow */
 }
 
 @media (min-width: 768px) {

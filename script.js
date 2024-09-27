@@ -5,6 +5,7 @@ const generateMeme = document.getElementById('generate-meme');
 const memeCanvas = document.getElementById('meme-canvas');
 const downloadMeme = document.getElementById('download-meme');
 const styleSelector = document.getElementById('style');
+const darkModeToggle = document.getElementById('dark-mode-toggle'); // Add this line
 const ctx = memeCanvas.getContext('2d');
 
 let uploadedImage = null; // Store the uploaded image
@@ -189,4 +190,9 @@ downloadMeme.addEventListener('click', () => {
     a.href = url;
     a.download = 'meme.png';
     a.click();
+});
+
+// Dark Mode Toggle Functionality
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
 });

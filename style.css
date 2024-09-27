@@ -118,6 +118,7 @@ button:hover {
 }
 
 #download-meme {
+    width: 100%; /* Make the button take full container width */
     max-width: 400px;
 }
 

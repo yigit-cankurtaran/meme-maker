@@ -119,8 +119,11 @@ button:hover {
 }
 
 #download-meme {
-    width: 100%; /* Make the button take full container width */
-    max-width: 400px;
+    width: 8em; 
+}
+
+#dark-mode-toggle {
+    width: 8em;
 }
 
 /* Dark Mode Styles */

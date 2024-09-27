@@ -185,11 +185,15 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 }
 
 downloadMeme.addEventListener('click', () => {
-    const url = memeCanvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'meme.png';
-    a.click();
+    if (uploadedImage) {
+        const url = memeCanvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'meme.png';
+        a.click();
+    } else {
+        alert("There's nothing to download!");
+    }
 });
 
 // Dark Mode Toggle Functionality

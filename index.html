@@ -5,33 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Creator</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="meme-generator">
         <h1>Meme Generator</h1>
-        <div class="style-selector">
-            <label for="style">Choose a style:</label>
-            <select id="style" name="style">
-                <option value="impact">Classic Meme</option>
-                <option value="demotivational">Demotivational Poster</option>
-            </select>
+        <div class="input-container">
+            <div class="left-inputs">
+                <input type="file" id="image-upload" accept="image/*" />
+                <div class="style-selector">
+                    <label for="style">Choose a style:</label>
+                    <select id="style" name="style">
+                        <option value="impact">Classic Meme</option>
+                        <option value="demotivational">Demotivational Poster</option>
+                    </select>
+                </div>
+            </div>
+            <div class="right-inputs">
+                <input type="text" id="top-text" placeholder="Top Text" />
+                <input type="text" id="bottom-text" placeholder="Bottom Text" />
+            </div>
         </div>
-        <div class="input-container" style="text-align: center;">
-            <input type="file" id="image-upload" accept="image/*" />
-            <input type="text" id="top-text" placeholder="Top Text" style="text-align: center;"/>
-            <input type="text" id="bottom-text" placeholder="Bottom Text" style="text-align: center;"/>
-            <button id="generate-meme">Generate Meme</button>
-        </div>
+        <button id="generate-meme">Generate Meme</button>
         <canvas id="meme-canvas"></canvas>
         <div class="button-container">
             <button id="download-meme">Download Meme</button>
             <button id="dark-mode-toggle">Toggle Dark Mode</button>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

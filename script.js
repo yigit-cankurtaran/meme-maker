@@ -7,6 +7,21 @@ const downloadMeme = document.getElementById('download-meme');
 const styleSelector = document.getElementById('style');
 const darkModeToggle = document.getElementById('dark-mode-toggle'); // Add this line
 const ctx = memeCanvas.getContext('2d');
+const body = document.body;
+
+// Function to set dark mode
+function setDarkMode(isDark) {
+    body.classList.toggle('dark-mode', isDark);
+    darkModeToggle.textContent = isDark ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+    // Store the user's preference
+    localStorage.setItem('darkMode', isDark);
+}
+
+// Check for user's preference in localStorage or default to dark mode
+const prefersDarkMode = localStorage.getItem('darkMode') !== 'false';
+
+// Set initial mode
+setDarkMode(prefersDarkMode);
 
 let uploadedImage = null; // Store the uploaded image
 let originalImageDimensions = { width: 0, height: 0 }; // Store original image dimensions
@@ -198,5 +213,5 @@ downloadMeme.addEventListener('click', () => {
 
 // Dark Mode Toggle Functionality
 darkModeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
+    setDarkMode(!body.classList.contains('dark-mode'));
 });

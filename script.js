@@ -5,6 +5,7 @@ const generateMeme = document.getElementById('generate-meme');
 const memeCanvas = document.getElementById('meme-canvas');
 const downloadMeme = document.getElementById('download-meme');
 const styleSelector = document.getElementById('style');
+// TODO: the "funny caption" style can be improved, look into it.
 const darkModeToggle = document.getElementById('dark-mode-toggle'); // Add this line
 const ctx = memeCanvas.getContext('2d');
 const body = document.body;
@@ -82,9 +83,27 @@ generateMeme.addEventListener('click', () => {
     const topTextValue = topText.value;
     const bottomTextValue = bottomText.value;
 
-    if (styleSelector.value === 'demotivational') {
+    if (styleSelector.value === 'funnycaption') {
+        // Funny Caption Style
+        const newWidth = uploadedImage.width;
+        const newHeight = uploadedImage.height;
+
+        memeCanvas.width = newWidth;
+        memeCanvas.height = newHeight;
+        ctx.drawImage(uploadedImage, 0, 0, newWidth, newHeight);
+
+        const textHeight = 80; // Height of the white rectangle
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, newWidth, textHeight);
+
+        ctx.fillStyle = 'black';
+        ctx.font = 'bold 24px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        wrapText(ctx, topTextValue, newWidth / 2, textHeight / 2, newWidth - 20, 30);
+    } else if (styleSelector.value === 'demotivational') {
         // Set canvas to a square with black background
-        const canvasSize = 600; // Square canvas size
+        const canvasSize = 600; // Square canvas size 
         memeCanvas.width = canvasSize;
         memeCanvas.height = canvasSize;
         ctx.fillStyle = 'black';

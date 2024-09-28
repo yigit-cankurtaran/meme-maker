@@ -9,6 +9,8 @@ const styleSelector = document.getElementById('style');
 const darkModeToggle = document.getElementById('dark-mode-toggle'); // Add this line
 const ctx = memeCanvas.getContext('2d');
 const body = document.body;
+let isDrawing = false;
+let currentColor = 'black'; // Default drawing color
 
 // Function to set dark mode
 function setDarkMode(isDark) {
@@ -233,4 +235,57 @@ downloadMeme.addEventListener('click', () => {
 // Dark Mode Toggle Functionality
 darkModeToggle.addEventListener('click', () => {
     setDarkMode(!body.classList.contains('dark-mode'));
+});
+
+// Drawing and Erasing Functionality
+const drawButton = document.getElementById('draw-button');
+const eraseButton = document.getElementById('erase-button');
+let isErasing = false; 
+drawButton.addEventListener('click', () => {
+    // Toggle drawing mode
+    isDrawing = !isDrawing;
+    drawButton.textContent = isDrawing ? 'Stop Drawing' : 'Draw';
+    if (!uploadedImage) {
+        alert("Please upload an image first.");
+        return;
+    }
+});
+
+eraseButton.addEventListener('click', () => {
+    // Toggle erasing mode
+    isErasing = !isErasing;
+    // Optionally add visual feedback to the erase button as well
+});
+
+memeCanvas.addEventListener('mousedown', startDrawing);
+memeCanvas.addEventListener('mousemove', draw);
+memeCanvas.addEventListener('mouseup', stopDrawing);
+
+function startDrawing(e) {
+    if (isDrawing) {
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+    }
+}
+
+function draw(e) {
+    if (isDrawing) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+    }
+}
+
+function stopDrawing() {
+    if (isDrawing) {
+        ctx.closePath();
+    }
+}
+
+// Erase Functionality
+memeCanvas.addEventListener('mousedown', (e) => {
+    if (isErasing) {
+        ctx.clearRect(e.offsetX - 10, e.offsetY - 10, 20, 20); // Erase a small rectangle around the click
+    }
 });
